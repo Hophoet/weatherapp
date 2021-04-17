@@ -12,6 +12,8 @@ target 'weatherapp' do
     :hermes_enabled => false
   )
 
+  pod 'react-native-maps', :path => '../node_modules/react-native-maps'
+
   target 'weatherappTests' do
     inherit! :complete
     # Pods for testing
