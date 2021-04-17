@@ -12,7 +12,7 @@ export default class CityItem extends React.Component {
 		return (
 			<View style={styles.container}>
 				<TouchableOpacity
-
+					onPress={() => this.props.navigateToCityDetail(city)}
 				>
 					<Text>{city && city.name}</Text>
 				</TouchableOpacity>
