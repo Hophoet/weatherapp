@@ -13,21 +13,18 @@ export default class CityItem extends React.Component{
 		return (
 			<View style={styles.container}>
 				<View style={styles.mapContainer}>
-					<Text
-						onPress={() => {this.props.navigation.navigate('CityList')}}
-						> NAVIGATE BACK TO LIST </Text>
 				</View>
 				<View style={styles.cityInfosContainer}>
 					<View style={styles.column1}>	
 						<Text style={styles.cityName}>{city && city.name}</Text>
-						<Text>Clear Sky</Text>
-						<Text>Humidity: 70</Text>
-						<Text>Wind Speed: 5.52</Text>
-						<Text>Max Temp: 38°c</Text>
-						<Text>Min Temp: 27°c</Text>
+						<Text>{city.weather[0].main}</Text>
+						<Text>Humidity: {city.main.humidity}</Text>
+						<Text>Wind Speed: {city.wind.speed}</Text>
+						<Text>Max Temp: {city.main.temp_max}°c</Text>
+						<Text>Min Temp: {city.main.temp_min}°c</Text>
 					</View> 
 					<View style={styles.column2}>	
-						<Text style={styles.cityTemperature}> 25°c</Text>	
+						<Text style={styles.cityTemperature}>{city.main.temp}°c</Text>	
 					</View> 
 				</View>
 			</View>
@@ -60,13 +57,14 @@ const styles = StyleSheet.create({
 		//backgroundColor:'blue',
 		flex:1.5,
 		justifyContent:'center',
-		alignItems:'center'
+		alignItems:'center',
 	},
 	cityName:{
 		fontSize:20,
 	},
 	cityTemperature:{
-		fontSize:30
+		fontSize:30,
+		textAlign:'center',
 	}
 
 })
