@@ -1,6 +1,7 @@
 
 import React from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import Map from '../components/Map';
 
 export default class CityItem extends React.Component{
 	constructor(props){
@@ -13,6 +14,7 @@ export default class CityItem extends React.Component{
 		return (
 			<View style={styles.container}>
 				<View style={styles.mapContainer}>
+					<Map city={city}/>
 				</View>
 				<View style={styles.cityInfosContainer}>
 					<View style={styles.column1}>	
@@ -41,7 +43,6 @@ const styles = StyleSheet.create({
 	},
 	mapContainer:{
 		flex:3,
-		backgroundColor:'gray',
 	},
 	cityInfosContainer:{
 		backgroundColor:'white',
