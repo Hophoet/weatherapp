@@ -12,9 +12,16 @@ export default class CityItem extends React.Component {
 		return (
 			<View style={styles.container}>
 				<TouchableOpacity
+					style={styles.content}
 					onPress={() => this.props.navigateToCityDetail(city)}
 				>
-					<Text>{city && city.name}</Text>
+					<View style={styles.column1}>
+						<Text style={styles.cityName}>{city && city.name}</Text>
+						<Text style={styles.cityWeather}> Cloudy </Text>
+					</View>
+					<View style={styles.column2}>
+						<Text style={styles.cityTemperature}>34°c</Text>
+					</View>
 				</TouchableOpacity>
 			</View>
 		)
@@ -27,10 +34,26 @@ export default class CityItem extends React.Component {
 const styles = StyleSheet.create({
 	container:{
 		flex:1,
-		justifyContent:'center',
 		paddingVertical:5,
-		backgroundColor:'gray',
-		marginTop:5
+		marginTop:5,
+		paddingHorizontal:5,
+	},
+	content:{
+		flexDirection:'row',
+		justifyContent:'center',
+		alignItems:'center'
+	},
+	column1:{
+		flex:4,
+	},
+	cityName:{
+		fontSize:18,
+	},
+	cityWeather:{
+		opacity:.5
+	},
+	cityTemperature:{
+		fontSize:30,
 	}
 
 })
