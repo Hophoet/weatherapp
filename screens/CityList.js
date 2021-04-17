@@ -20,7 +20,6 @@ export default class CityList extends React.Component {
 	render(){
 		return (
 			<View style={styles.container}>
-				<Text>CITY LIST</Text>
 				<FlatList 
 					data={this.state.cities}
 					keyExtractor={(item) => item.name}
