@@ -13,18 +13,18 @@ export default class CityList extends React.Component {
 		}
 	}
 
+	navigateToCityDetail = (data) => {
+		this.props.navigation.navigate('CityDetail', {city:data})
+	}
 
 	render(){
 		return (
 			<View style={styles.container}>
 				<Text>CITY LIST</Text>
-				<Text
-					onPress={() => {this.props.navigation.navigate('CityDetail')}}
-					> NAVIGATE TO CITY DETAIL </Text>
 				<FlatList 
 					data={this.state.cities}
 					keyExtractor={(item) => item.name}
-					renderItem={({index, item}) => <CityItem city={item} />}
+					renderItem={({index, item}) => <CityItem navigateToCityDetail={this.navigateToCityDetail} city={item} />}
 				/>
 			</View>
 		)
