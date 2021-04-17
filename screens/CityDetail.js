@@ -9,9 +9,10 @@ export default class CityItem extends React.Component{
 
 
 	render(){
+		let city = this.props.navigation.state.params.city
 		return (
 			<View style={styles.container}>
-				<Text>City item</Text>
+				<Text style={styles.cityName}>{city && city.name}</Text>
 				<Text
 					onPress={() => {this.props.navigation.navigate('CityList')}}
 					> NAVIGATE BACK TO LIST </Text>
@@ -28,6 +29,10 @@ const styles = StyleSheet.create({
 		flex:1,
 		justifyContent:'center',
 		alignItems:'center'
+	},
+	cityName:{
+		fontSize:15,
+		fontWeight:'bold'
 	}
 
 })
