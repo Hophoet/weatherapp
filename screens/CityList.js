@@ -44,10 +44,10 @@ class CityList extends React.Component {
               }
             )
             if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-              console.log("You can use the location")
+              //console.log("You can use the location")
               //alert("You can use the location");
             } else {
-              console.log("location permission denied")
+              //console.log("location permission denied")
               //alert("Location permission denied");
             }
           } catch (err) {
@@ -76,11 +76,11 @@ class CityList extends React.Component {
 		if(this.props.userLocation){
 			let lat = this.props.userLocation.coords.latitude;
 			let lon = this.props.userLocation.coords.longitude;
-			console.log(lat, lon)
+			//console.log(lat, lon)
 			getTemp(lat, lon)
 			.then(response => {
-				console.log('user temperature response')
-				console.log(response.main.temp)
+				//console.log('user temperature response')
+				//console.log(response.main.temp)
 				this._makeLocalNotification(response.main.temp);
 			})
 			.catch(error => {
@@ -95,7 +95,7 @@ class CityList extends React.Component {
 	_getCities = () => {
 		getCities()
 		.then(response => {
-			console.log('response')
+			//console.log('response')
 			this.setState({cities:response.list});
 		})
 		.catch(error => {
