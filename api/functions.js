@@ -1,5 +1,9 @@
 import {API_URL, API_KEY} from './config';
 
+function convertTemperatureTC(temp){
+	 return parseInt(temp - 273.15);
+}
+
 function getCities() {
 	return new Promise( (resolve, reject) => {
 var 	myHeaders = new Headers();
@@ -45,5 +49,6 @@ function getTemp(lat, lon) {
 
 export {
 	getCities,
-	getTemp
+	getTemp,
+	convertTemperatureTC
 }
