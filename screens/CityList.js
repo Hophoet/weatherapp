@@ -6,12 +6,23 @@ import CityItem from '../components/CityItem';
 import {getCities, getTemp} from '../api/functions';
 import {SET_USER_LOCATION} from '../redux/store/actions';
 
+import PushNotification from 'react-native-push-notification';
+
 class CityList extends React.Component {
 	constructor(props){
 		super(props)
 		this.state = {
 			cities: []
 		}
+	}
+
+
+	_makeLocalNotification = (temp) => {
+		PushNotification.localNotificationSchedule({
+		  message: `Current temperature ${temp}°c`, // (required)
+		  date: new Date(Date.now() + (4 * 1000)), // in 60 secs
+		  channelId:'com.weatherapp'
+		});
 	}
 
 	navigateToCityDetail = (data) => {
@@ -44,8 +55,8 @@ class CityList extends React.Component {
 			(position) => {
 				let action = {type:SET_USER_LOCATION, value:position};
 				this.props.dispatch(action)
-				console.log('location from redux')
-				console.log(this.props.userLocation);
+				//console.log('location from redux')
+				//console.log(this.props.userLocation);
 			
 			},
 			(error) => {
@@ -64,7 +75,8 @@ class CityList extends React.Component {
 			getTemp(lat, lon)
 			.then(response => {
 				console.log('user temperature response')
-				console.log(response)
+				console.log(response.main.temp)
+				this._makeLocalNotification(response.main.temp);
 			})
 			.catch(error => {
 				console.log('error')
