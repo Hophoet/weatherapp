@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import Geolocation from 'react-native-geolocation-service';
 import CityItem from '../components/CityItem';
 import {getCities} from '../api/functions';
+import {SET_USER_LOCATION} from '../redux/store/actions';
 
 class CityList extends React.Component {
 	constructor(props){
@@ -41,7 +42,11 @@ class CityList extends React.Component {
 	_getLocation = () => {
 		Geolocation.getCurrentPosition(
 			(position) => {
-			  console.log(position);
+				let action = {type:SET_USER_LOCATION, value:position};
+				this.props.dispatch(action)
+				console.log('location from redux')
+				console.log(this.props.userLocation);
+			
 			},
 			(error) => {
 			  // See error code charts below.
@@ -67,7 +72,6 @@ class CityList extends React.Component {
 	componentDidMount(){
 		this._getCities();
 		this._getLocation();
-		console.log('user location', this.props.userLocation)
 	}
 
 	render(){
