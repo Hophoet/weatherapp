@@ -1,5 +1,5 @@
 import React from 'react';
-import {PermissionsAndroid, Text, View, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
+import {ActivityIndicator, PermissionsAndroid, Text, View, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
 import {connect} from 'react-redux';
 import Geolocation from 'react-native-geolocation-service';
 import CityItem from '../components/CityItem';
@@ -16,7 +16,8 @@ class CityList extends React.Component {
 	constructor(props){
 		super(props)
 		this.state = {
-			cities: []
+			cities: [],
+			isLoading:false,
 		}
 	}
 
@@ -93,12 +94,15 @@ class CityList extends React.Component {
 	
 
 	_getCities = () => {
+		this.setState({isLoading:true});
 		getCities()
 		.then(response => {
 			//console.log('response')
+			this.setState({isLoading:false});
 			this.setState({cities:response.list});
 		})
 		.catch(error => {
+			this.setState({isLoading:false});
 			console.log('error')
 			console.log(error);
 		})
@@ -110,14 +114,49 @@ class CityList extends React.Component {
 		this._getTem();
 	}
 
+	_renderActivityIndicator = () => {
+		if(this.state.isLoading){
+			return(
+				<View style={styles.activityIndicatorContainer}>
+					<ActivityIndicator color='gray' size='large' />
+				</View>
+			);
+		}
+	}
+
+	_renderCities = () => {
+		if(!this.state.isLoading){
+			if(this.state.cities.length){
+				return (
+					<View>
+					<FlatList 
+						data={this.state.cities}
+						keyExtractor={(item) => item.name}
+						renderItem={({index, item}) => <CityItem navigateToCityDetail={this.navigateToCityDetail} city={item} />}
+					/>
+					</View>
+				)
+			}	
+			else{
+				return (
+					<View style={styles.failedContainer}>
+						<Text>Check your connexion and retry</Text>
+						<TouchableOpacity 
+							onPress={this._getCities}
+							style={styles.retryButton}>
+							<Text>RETRY</Text>
+						</TouchableOpacity>
+					</View>
+				)
+			}
+		}
+	}	
+
 	render(){
 		return (
 			<View style={styles.container}>
-				<FlatList 
-					data={this.state.cities}
-					keyExtractor={(item) => item.name}
-					renderItem={({index, item}) => <CityItem navigateToCityDetail={this.navigateToCityDetail} city={item} />}
-				/>
+				{this._renderActivityIndicator()}
+				{this._renderCities()}
 			</View>
 		)
 
@@ -145,6 +184,25 @@ export default connect(mapStateToProps, mapDispatchToProps)(CityList);
 const styles = StyleSheet.create({
 	container:{
 		flex:1,
+	},
+	activityIndicatorContainer:{
+		//backgroundColor:'red',
+		flex:1,
+		justifyContent:'center',
+		alignItems:'center',
+	},
+	failedContainer:{
+		justifyContent:'center',
+		alignItems:'center',
+		flex:1,
+	},
+	retryButton:{
+		backgroundColor:'white',
+		paddingHorizontal:20,
+		paddingVertical:10,
+		borderRadius:5,
+		elevation:5
+		
 	}
 
 })
