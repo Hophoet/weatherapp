@@ -1,12 +1,12 @@
 import React from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import {convertTemperatureTC} from '../api/functions';
 
 export default class CityItem extends React.Component {
 	constructor(props){
 		super(props)
 	}
 
-	_convertTemperatureFTC = (temp) => temp//(temp-32)/1.8
 
 	render(){
 		let city = this.props.city
@@ -21,7 +21,9 @@ export default class CityItem extends React.Component {
 						<Text style={styles.cityWeather}>{city && city.weather[0].description}</Text>
 					</View>
 					<View style={styles.column2}>
-						<Text style={styles.cityTemperature}>{this._convertTemperatureFTC(city.main.temp)}°c</Text>
+						<Text style={styles.cityTemperature}>
+							{convertTemperatureTC(city.main.temp)}°c
+						</Text>
 					</View>
 				</TouchableOpacity>
 			</View>

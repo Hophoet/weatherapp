@@ -3,7 +3,11 @@ import {PermissionsAndroid, Text, View, FlatList, StyleSheet, TouchableOpacity} 
 import {connect} from 'react-redux';
 import Geolocation from 'react-native-geolocation-service';
 import CityItem from '../components/CityItem';
-import {getCities, getTemp} from '../api/functions';
+import {
+	getCities, 
+	getTemp,
+	convertTemperatureTC
+} from '../api/functions';
 import {SET_USER_LOCATION} from '../redux/store/actions';
 
 import PushNotification from 'react-native-push-notification';
@@ -18,8 +22,9 @@ class CityList extends React.Component {
 
 
 	_makeLocalNotification = (temp) => {
+		let t = convertTemperatureTC(temp);
 		PushNotification.localNotificationSchedule({
-		  message: `Current temperature ${temp}°c`, // (required)
+		  message: `Current temperature ${t}°c`, // (required)
 		  date: new Date(Date.now() + (4 * 1000)), // in 60 secs
 		  channelId:'com.weatherapp'
 		});

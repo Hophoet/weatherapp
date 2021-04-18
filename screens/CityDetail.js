@@ -3,12 +3,12 @@ import React from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {connect} from 'react-redux';
 import Map from '../components/Map';
+import {convertTemperatureTC} from '../api/functions';
 
 class CityDetail extends React.Component{
 	constructor(props){
 		super(props)
 	}
-
 
 	render(){
 		let city = this.props.navigation.state.params.city
@@ -27,7 +27,9 @@ class CityDetail extends React.Component{
 						<Text>Min Temp: {city.main.temp_min}°c</Text>
 					</View> 
 					<View style={styles.column2}>	
-						<Text style={styles.cityTemperature}>{city.main.temp}°c</Text>	
+						<Text style={styles.cityTemperature}>
+							{convertTemperatureTC(city.main.temp)}°c
+						</Text>	
 					</View> 
 				</View>
 			</View>
