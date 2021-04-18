@@ -1,10 +1,11 @@
 import React from 'react';
 import {PermissionsAndroid, Text, View, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
+import {connect} from 'react-redux';
 import Geolocation from 'react-native-geolocation-service';
 import CityItem from '../components/CityItem';
 import {getCities} from '../api/functions';
 
-export default class CityList extends React.Component {
+class CityList extends React.Component {
 	constructor(props){
 		super(props)
 		this.state = {
@@ -66,6 +67,7 @@ export default class CityList extends React.Component {
 	componentDidMount(){
 		this._getCities();
 		this._getLocation();
+		console.log('user location', this.props.userLocation)
 	}
 
 	render(){
@@ -82,6 +84,22 @@ export default class CityList extends React.Component {
 	}
 
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    dispatch: (action) => {
+      dispatch(action);
+    },
+  };
+};
+
+const mapStateToProps = (state) => {
+  return {
+    userLocation: state.userLocation,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CityList);
 
 
 const styles = StyleSheet.create({

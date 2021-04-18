@@ -1,9 +1,10 @@
 
 import React from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import {connect} from 'react-redux';
 import Map from '../components/Map';
 
-export default class CityItem extends React.Component{
+class CityDetail extends React.Component{
 	constructor(props){
 		super(props)
 	}
@@ -36,6 +37,21 @@ export default class CityItem extends React.Component{
 
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    dispatch: (action) => {
+      dispatch(action);
+    },
+  };
+};
+
+const mapStateToProps = (state) => {
+  return {
+    userLocation: state.userLocation,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CityDetail);
 
 const styles = StyleSheet.create({
 	container:{
