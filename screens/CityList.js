@@ -3,7 +3,7 @@ import {PermissionsAndroid, Text, View, FlatList, StyleSheet, TouchableOpacity} 
 import {connect} from 'react-redux';
 import Geolocation from 'react-native-geolocation-service';
 import CityItem from '../components/CityItem';
-import {getCities} from '../api/functions';
+import {getCities, getTemp} from '../api/functions';
 import {SET_USER_LOCATION} from '../redux/store/actions';
 
 class CityList extends React.Component {
@@ -55,6 +55,24 @@ class CityList extends React.Component {
 			{ enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
 		);
     }
+
+	_getTem = () => {
+		if(this.props.userLocation){
+			let lat = this.props.userLocation.coords.latitude;
+			let lon = this.props.userLocation.coords.longitude;
+			console.log(lat, lon)
+			getTemp(lat, lon)
+			.then(response => {
+				console.log('user temperature response')
+				console.log(response)
+			})
+			.catch(error => {
+				console.log('error')
+				console.log(error);
+			})
+		}
+
+	}
 	
 
 	_getCities = () => {
@@ -72,6 +90,7 @@ class CityList extends React.Component {
 	componentDidMount(){
 		this._getCities();
 		this._getLocation();
+		this._getTem();
 	}
 
 	render(){
